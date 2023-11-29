@@ -1,7 +1,23 @@
-import { Flex, Heading, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  Flex,
+  Heading,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
-export function SetQuestionQty(p: { max: number; min: number; step: number; default: number }) {
+export function SetQuestionQty(p: {
+  max: number;
+  min: number;
+  step: number;
+  default: number;
+  onClickNext: (amount: number) => void;
+}) {
   const [sliderValue, setSliderValue] = useState<number>(p.default);
 
   const renderMarks = (): React.ReactNode[] => {
@@ -13,26 +29,37 @@ export function SetQuestionQty(p: { max: number; min: number; step: number; defa
   };
 
   return (
-    <Flex direction={"column"} alignItems={"center"}>
-      <Heading as={"h1"} fontSize={"3xl"} mb={20}>
-        How many questions?
-      </Heading>
-      <Slider
-        value={sliderValue}
-        maxWidth={400}
-        max={p.max}
-        min={p.min}
-        step={p.step}
-        colorScheme="yellow"
-        aria-label="slider-ex-6"
-        onChange={(val) => setSliderValue(val)}
+    <>
+      <Flex direction={"column"} alignItems={"center"}>
+        <Heading as={"h1"} fontSize={"3xl"} mb={20}>
+          How many questions?
+        </Heading>
+        <Slider
+          value={sliderValue}
+          maxWidth={400}
+          max={p.max}
+          min={p.min}
+          step={p.step}
+          colorScheme="yellow"
+          aria-label="slider-ex-6"
+          onChange={(val) => setSliderValue(val)}
+        >
+          {renderMarks()}
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>{" "}
+      </Flex>
+      <Button
+        onClick={() => p.onClickNext(sliderValue)}
+        position={"absolute"}
+        top={"80%"}
+        right={"10%"}
+        rightIcon={<ArrowForwardIcon />}
       >
-        {renderMarks()}
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>{" "}
-    </Flex>
+        Set category
+      </Button>
+    </>
   );
 }

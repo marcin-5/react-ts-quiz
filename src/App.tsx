@@ -3,7 +3,9 @@ import logoImg from "@/assets/logo.png";
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { useState } from "react";
 import "../global.css";
+import { SetQuestionCategory } from "./features/SetQuestionCategory";
 import { SetQuestionQty } from "./features/SetQuestionQty";
+import { FetchQuizParams, QuizDifficulty, QuizType } from "./types/quiz-type";
 
 enum Step {
   SetQuestionQty,
@@ -15,6 +17,12 @@ enum Step {
 
 export function App() {
   const [step, setStep] = useState<Step>(Step.SetQuestionQty);
+  const [quizParams, setQuizParams] = useState<FetchQuizParams>({
+    amount: 0,
+    category: "",
+    difficulty: QuizDifficulty.Mixed,
+    type: QuizType.Mixed,
+  });
 
   const header = (
     <Flex justify="center">
@@ -25,9 +33,20 @@ export function App() {
   const renderScreenByStep = () => {
     switch (step) {
       case Step.SetQuestionQty:
-        return <SetQuestionQty max={30} min={5} step={5} default={10} />;
+        return (
+          <SetQuestionQty
+            onClickNext={(amount: number) => {
+              setQuizParams({ ...quizParams, amount });
+              setStep(Step.SetQuestionCategory);
+            }}
+            max={30}
+            min={5}
+            step={5}
+            default={10}
+          />
+        );
       case Step.SetQuestionCategory:
-        return <></>;
+        return <SetQuestionCategory />;
       case Step.SetQuestionDifficulty:
         return <></>;
       case Step.Play:
