@@ -25,7 +25,7 @@ export function App() {
   const renderScreenByStep = () => {
     switch (step) {
       case Step.SetQuestionQty:
-        return <SetQuestionQty />;
+        return <SetQuestionQty max={30} min={5} step={5} default={10} />;
       case Step.SetQuestionCategory:
         return <></>;
       case Step.SetQuestionDifficulty:
@@ -43,7 +43,7 @@ export function App() {
     <Box py={10} h="100%">
       {header}
       <Image src={bubbleImg} position={"absolute"} zIndex={-1} right={-120} top={100} />
-      <Box>{renderScreenByStep()}</Box>
+      <Box mt={100}>{renderScreenByStep()}</Box>
     </Box>
   );
 }
