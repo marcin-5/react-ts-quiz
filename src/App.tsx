@@ -6,6 +6,7 @@ import "../global.css";
 import { QuizAPI } from "./api/quiz-api";
 import { SetQuestionCategory } from "./features/SetQuestionCategory";
 import { SetQuestionQty } from "./features/SetQuestionQty";
+import { SetQuizDifficulty } from "./features/SetQuizDifficulty";
 import { FetchQuizParams, QuizCategory, QuizDifficulty, QuizType } from "./types/quiz-type";
 
 enum Step {
@@ -65,7 +66,14 @@ export function App() {
           />
         );
       case Step.SetQuestionDifficulty:
-        return <></>;
+        return (
+          <SetQuizDifficulty
+            onClickNext={(difficulty: QuizDifficulty) => {
+              setQuizParams({ ...quizParams, difficulty });
+              setStep(Step.Play);
+            }}
+          />
+        );
       case Step.Play:
         return <></>;
       case Step.Score:
