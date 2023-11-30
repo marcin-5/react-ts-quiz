@@ -22,7 +22,7 @@ export function PlayQuiz(p: { quiz: QuizItem[] }) {
 
   useEffect(() => {
     setAvailableAnswers(
-      [currentQuizItem.correct_answer, ...currentQuizItem.incorrect_answers]
+      [currentQuizItem.correct_answer, ...currentQuizItem.incorrect_answers].sort(() => Math.random() - 0.5)
     );
   }, [currentQuizItemIndex]);
 
