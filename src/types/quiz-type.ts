@@ -17,3 +17,12 @@ export interface FetchQuizParams {
   difficulty: QuizDifficulty;
   type: QuizType;
 }
+
+export interface QuizCategory {
+  id: number;
+  name: string;
+}
+
+export interface FetchQuizCategoriesResp {
+  trivia_categories: QuizCategory[];
+}
