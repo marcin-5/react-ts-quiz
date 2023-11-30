@@ -26,3 +26,17 @@ export interface QuizCategory {
 export interface FetchQuizCategoriesResp {
   trivia_categories: QuizCategory[];
 }
+
+export interface QuizItem {
+  category: string;
+  type: QuizType;
+  difficulty: QuizDifficulty;
+  question: string;
+  correct_answer: string;
+  incorect_answers: string[];
+}
+
+export interface FetchQuizResp {
+  response_code: number;
+  results: QuizItem[];
+}
