@@ -33,7 +33,7 @@ export interface QuizItem {
   difficulty: QuizDifficulty;
   question: string;
   correct_answer: string;
-  incorect_answers: string[];
+  incorrect_answers: string[];
 }
 
 export interface FetchQuizResp {
