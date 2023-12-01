@@ -51,9 +51,9 @@ export function App() {
               setStep(Step.SetQuestionCategory);
             }}
             max={30}
-            min={5}
-            step={5}
-            default={10}
+            min={6}
+            step={6}
+            default={12}
           />
         );
       case Step.SetQuestionCategory:

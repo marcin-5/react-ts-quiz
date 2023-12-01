@@ -1,4 +1,4 @@
-import { Flex, Heading, Radio, RadioGroup, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Heading, Radio, RadioGroup, SimpleGrid, Text } from "@chakra-ui/react";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
 import invalidAnimation from "../assets/lottie/invalid.json";
@@ -10,13 +10,16 @@ export function PlayQuiz(p: { quiz: QuizItem[] }) {
   const [answer, setAnswer] = useState<string>();
   const [questionStatus, setQuestionStatus] = useState<"valid" | "invalid" | "unanswered">("unanswered");
   const [availableAnswers, setAvailableAnswers] = useState<string[]>([]);
+  const [history, setHistory] = useState<boolean[]>([]);
   const currentQuizItem: QuizItem = p.quiz[currentQuizItemIndex];
 
   const isValidAnswer = (answer: string): boolean => answer === currentQuizItem.correct_answer;
 
   useEffect(() => {
     if (answer) {
-      setQuestionStatus(isValidAnswer(answer) ? "valid" : "invalid");
+      const isValid = isValidAnswer(answer);
+      setQuestionStatus(isValid ? "valid" : "invalid");
+      setHistory([...history, isValid]);
     }
   }, [answer]);
 
@@ -25,6 +28,23 @@ export function PlayQuiz(p: { quiz: QuizItem[] }) {
       [currentQuizItem.correct_answer, ...currentQuizItem.incorrect_answers].sort(() => Math.random() - 0.5)
     );
   }, [currentQuizItemIndex]);
+
+  const progressBar = () => {
+    return (
+      <HStack>
+        {p.quiz.map((quizItem, i) => {
+          return (
+            <Box
+              key={i}
+              h={3}
+              w={25}
+              backgroundColor={i >= currentQuizItemIndex ? "gray.200" : history[i] ? "green.300" : "red.300"}
+            />
+          );
+        })}
+      </HStack>
+    );
+  };
 
   const radioList = availableAnswers.map((answer: string, i: number) => {
     return (
@@ -39,6 +59,7 @@ export function PlayQuiz(p: { quiz: QuizItem[] }) {
 
   return (
     <Flex direction={"column"} alignItems={"center"} justify={"center"} px={10}>
+      {progressBar()}
       <Heading fontSize={"3xl"} mt={100} mb={20} dangerouslySetInnerHTML={{ __html: currentQuizItem.question }} />
       <RadioGroup value={answer} onChange={questionStatus === "unanswered" ? setAnswer : undefined}>
         <SimpleGrid columns={2} spacing={4}>
