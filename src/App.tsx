@@ -4,11 +4,11 @@ import { Box, Flex, Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import "../global.css";
 import { QuizAPI } from "./api/quiz-api";
+import { PlayQuiz } from "./features/PlayQuiz/PlayQuiz";
 import { SetQuestionCategory } from "./features/SetQuestionCategory";
 import { SetQuestionQty } from "./features/SetQuestionQty";
 import { SetQuizDifficulty } from "./features/SetQuizDifficulty";
 import { FetchQuizParams, QuizCategory, QuizDifficulty, QuizItem, QuizType } from "./types/quiz-type";
-import { PlayQuiz } from "./features/PlayQuiz";
 
 enum Step {
   SetQuestionQty,
